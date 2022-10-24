@@ -18,6 +18,8 @@ Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "JwtSample", "JwtSample\JwtS
 EndProject
 Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "AccountHelper", "AccountHelper\AccountHelper.csproj", "{78ADAAED-5BCD-48DC-A046-B704DB3D316B}"
 EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "EmployeeClient", "EmployeeClient\EmployeeClient.csproj", "{04AD210F-3949-429C-A03A-041B2358A8E7}"
+EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
 		Debug|Any CPU = Debug|Any CPU
@@ -44,6 +46,10 @@ Global
 		{78ADAAED-5BCD-48DC-A046-B704DB3D316B}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{78ADAAED-5BCD-48DC-A046-B704DB3D316B}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{78ADAAED-5BCD-48DC-A046-B704DB3D316B}.Release|Any CPU.Build.0 = Release|Any CPU
+		{04AD210F-3949-429C-A03A-041B2358A8E7}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{04AD210F-3949-429C-A03A-041B2358A8E7}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{04AD210F-3949-429C-A03A-041B2358A8E7}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{04AD210F-3949-429C-A03A-041B2358A8E7}.Release|Any CPU.Build.0 = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE

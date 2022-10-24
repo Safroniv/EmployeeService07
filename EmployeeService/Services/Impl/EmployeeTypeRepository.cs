@@ -65,6 +65,7 @@ namespace EmployeeService.Services.Impl
             {
                 return false;
             }
+            Console.ReadKey(true);
         }
     }
 }
