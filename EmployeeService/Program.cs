@@ -1,12 +1,17 @@
 using EmployeeService.Data;
+using EmployeeService.Models.Requests;
 using EmployeeService.Services;
 using EmployeeService.Services.Impl;
+using EmployeeService07.Models.Validators;
+using EmployeeService07.Services.Impl;
+using FluentValidation;
 using Microsoft.AspNetCore.Authentication.JwtBearer;
 using Microsoft.AspNetCore.HttpLogging;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.IdentityModel.Tokens;
 using Microsoft.OpenApi.Models;
 using NLog.Web;
+using System.Net;
 using System.Text;
 
 namespace EmployeeService
@@ -17,7 +22,22 @@ namespace EmployeeService
         {
             var builder = WebApplication.CreateBuilder(args);
 
+            builder.WebHost.ConfigureKestrel(options =>
+            {
+                options.Listen(IPAddress.Any, 5001, listenOptions =>
+                {
+                    listenOptions.Protocols = Microsoft.AspNetCore.Server.Kestrel.Core.HttpProtocols.Http2;
+                    listenOptions.UseHttps(@"C:\testcert.pfx", "12345");
+                });
+            });
+
             // Add services to the container.
+
+            #region Configure gRPC
+
+            builder.Services.AddGrpc();
+
+            #endregion
 
             #region Configure Logging Services
 
@@ -87,6 +107,11 @@ namespace EmployeeService
 
             #endregion
 
+            #region Configure FluentValidator
+
+            builder.Services.AddScoped<IValidator<AuthenticationRequest>, AuthenticationRequestValidator>();
+
+            #endregion
 
             builder.Services.AddSingleton<IAuthenticateService, AuthenticateService>();
 
@@ -130,15 +155,25 @@ namespace EmployeeService
                 app.UseSwagger();
                 app.UseSwaggerUI();
             }
-
-            app.UseHttpLogging();
-
+            
             app.UseRouting();
 
             app.UseAuthentication();
             app.UseAuthorization();
 
+            app.UseWhen(
+                ctx => ctx.Request.ContentType != "application/gprc",
+                builder =>
+                {
+                    builder.UseHttpLogging();
+                });
+
             app.MapControllers();
+
+            app.UseEndpoints(endpoints =>
+            {
+                endpoints.MapGrpcService<DictionariesService>();
+            });
 
             app.Run();
         }
